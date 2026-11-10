@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#05091d">
+<title>My Space Journey AI</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ color:white;
+ background:radial-gradient(circle at top,#172d60,#080d24 55%,#02040e);
+ min-height:100vh;
+}
+header{
+ padding:22px 15px;
+ text-align:center;
+ border-bottom:1px solid #34456c;
+}
+.logo{font-size:27px;font-weight:bold;color:#8ceaff}
+header p{color:#b8c8e8;font-size:13px}
+.container{max-width:650px;margin:auto;padding:20px}
+h1{text-align:center;font-size:30px}
+.intro{text-align:center;color:#c7d5f5;line-height:1.7}
+.space{
+ height:230px;
+ margin:22px 0;
+ border:1px solid #68dfff;
+ border-radius:20px;
+ position:relative;
+ overflow:hidden;
+ background:radial-gradient(circle,#243f7d,#080d26 65%);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+}
+.planet{
+ width:115px;height:115px;border-radius:50%;
+ background:radial-gradient(circle at 30% 25%,#c5faff,#2874d4 45%,#111b52 80%);
+ box-shadow:0 0 45px #4abfff;
+}
+.ship{
+ position:absolute;
+ width:180px;height:110px;
+ border:2px solid #9ceeff;
+ border-radius:50%;
+ background:#a6eaff20;
+ box-shadow:0 0 25px #45d9ff;
+ display:flex;align-items:center;justify-content:center;
+ font-size:38px;
+ animation:float 4s ease-in-out infinite;
+}
+@keyframes float{
+ 50%{transform:translateY(-12px) rotate(3deg)}
+}
+.stars{position:absolute;inset:0;opacity:.8;
+ background-image:radial-gradient(white 1px,transparent 1px);
+ background-size:35px 35px}
+.card{
+ background:#111c3dcc;
+ border:1px solid #49638c;
+ border-radius:18px;
+ padding:20px;
+ margin:18px 0;
+}
+label{display:block;margin-bottom:12px;font-weight:bold}
+input{width:100%;margin:10px 0;color:white}
+.preview{
+ width:150px;height:150px;object-fit:cover;
+ border-radius:50%;display:none;margin:15px auto;
+ border:3px solid #69dcff;
+}
+button{
+ width:100%;padding:15px;
+ border:0;border-radius:12px;
+ background:linear-gradient(90deg,#087bd9,#7b42e8);
+ color:white;font-size:17px;font-weight:bold;
+ cursor:pointer;margin-top:12px;
+}
+button:disabled{opacity:.5}
+select{
+ width:100%;padding:13px;
+ border-radius:9px;background:#182a4b;
+ color:white;border:1px solid #6884b4;
+}
+#message{text-align:center;color:#8deaff;line-height:1.6}
+footer{text-align:center;color:#8296bb;padding:25px;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+ <div class="logo">🚀 MY SPACE JOURNEY AI</div>
+ <p>तुमची स्वतःची अंतराळ सफर!</p>
+</header>
+
+<main class="container">
+ <h1>🌌 ब्रह्मांडात तुमचे स्वागत!</h1>
+ <p class="intro">
+ तुमचा फोटो निवडा आणि पारदर्शक काचेच्या
+ स्पेसशिपमधून अंतराळ सफरीचा अनुभव घ्या.
+ </p>
+
+ <div class="space">
+  <div class="stars"></div>
+  <div class="planet"></div>
+  <div class="ship">🚀</div>
+ </div>
+
+ <div class="card">
+  <label>📸 तुमचा फोटो अपलोड करा</label>
+  <input type="file" id="photo" accept="image/*">
+  <img id="preview" class="preview" alt="तुमचा फोटो">
+
+  <label>🌍 तुमचे अंतराळातील ठिकाण निवडा</label>
+  <select id="destination">
+   <option value="चंद्र">🌙 चंद्र</option>
+   <option value="मंगळ">🔴 मंगळ ग्रह</option>
+   <option value="शनी">🪐 शनी ग्रह</option>
+   <option value="पृथ्वीची कक्षा">🌎 पृथ्वीची कक्षा</option>
+   <option value="आकाशगंगा">🌌 आकाशगंगा</option>
+  </select>
+
+  <label style="margin-top:20px">🎬 व्हिडिओचा कालावधी</label>
+  <select id="duration">
+   <option value="120">2 मिनिटे</option>
+  </select>
+
+  <button id="start">🚀 माझी अंतराळ सफर सुरू करा</button>
+  <p id="message">तुमच्या अद्भुत सफरीसाठी तयार व्हा!</p>
+ </div>
+</main>
+
+<footer>
+ My Space Journey AI © 2026
+<br>Explore the Universe • Dream Beyond Limits
+</footer>
+
+<script>
+const photo=document.getElementById('photo');
+const preview=document.getElementById('preview');
+const start=document.getElementById('start');
+const message=document.getElementById('message');
+
+photo.addEventListener('change',function(){
+ const file=this.files[0];
+ if(!file)return;
+ if(!file.type.startsWith('image/')){
+  message.textContent='कृपया योग्य फोटो निवडा.';
+  return;
+ }
+ const reader=new FileReader();
+ reader.onload=e=>{
+  preview.src=e.target.result;
+  preview.style.display='block';
+  message.textContent='तुमचा फोटो यशस्वीपणे निवडला आहे!';
+ };
+ reader.readAsDataURL(file);
+});
+
+start.addEventListener('click',function(){
+ if(!photo.files.length){
+  message.textContent='कृपया आधी तुमचा फोटो अपलोड करा.';
+  return;
+ }
+ const place=document.getElementById('destination').value;
+ message.textContent='🚀 '+place+' कडे तुमच्या अंतराळ सफरीची तयारी सुरू आहे! ही सध्या डिझाइनची डेमो आवृत्ती आहे. प्रत्यक्ष AI व्हिडिओ निर्मितीसाठी पुढील टप्प्यात AI सेवा जोडावी लागेल.';
+});
+</script>
+</body>
+</html>
